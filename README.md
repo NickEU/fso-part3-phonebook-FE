@@ -1,1 +1,1 @@
-Fullstackopen part 2 'Phonebook' exercises
+Fullstackopen part 3 'Phonebook' app frontend files
