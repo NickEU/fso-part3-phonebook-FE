@@ -1,1 +1,2 @@
-Fullstackopen part 2 'Phonebook' exercises
+Phonebook app files for the frontend
+Exercise solution for https://fullstackopen.com/en/ FSO part 3.
