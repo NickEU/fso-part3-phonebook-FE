@@ -38,10 +38,7 @@ const App = () => {
             })
             .catch(err => {
               console.log(err);
-              showNotificationMsg(
-                `Info on ${item.name} has already been removed from the server`,
-                true
-              );
+              showNotificationMsg(err.response.data.error, true);
               getPeople();
             });
         }
@@ -96,10 +93,16 @@ const App = () => {
       name: trimmedNewName,
       number: cleanUpNewNumber()
     };
-    dbServices.create(newObj).then(() => {
-      getPeople();
-      showNotificationMsg(`Successfully added ${newObj.name}`, false);
-    });
+    dbServices
+      .create(newObj)
+      .then(() => {
+        getPeople();
+        showNotificationMsg(`Successfully added ${newObj.name}`, false);
+      })
+      .catch(err => {
+        console.log(err.response.data);
+        showNotificationMsg(err.response.data.error, true);
+      });
 
     setNewName("");
     setNewNumber("");
@@ -108,10 +111,19 @@ const App = () => {
   const handleDeleteBtnClick = id => {
     const targetPerson = people.find(person => person.id === id);
     if (window.confirm(`Wanna delete ${targetPerson.name}?`)) {
-      dbServices.deleteEntry(id).then(() => {
-        getPeople();
-        showNotificationMsg(`Successfully deleted ${targetPerson.name}`, false);
-      });
+      dbServices
+        .deleteEntry(id)
+        .then(() => {
+          getPeople();
+          showNotificationMsg(
+            `Successfully deleted ${targetPerson.name}`,
+            false
+          );
+        })
+        .catch(err => {
+          console.log(err.response.data);
+          showNotificationMsg(err.response.data.error, true);
+        });
     }
   };
 
